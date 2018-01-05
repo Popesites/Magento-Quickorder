@@ -1,0 +1,21 @@
+{
+    "name": "popesites/module-quickorder",
+    "description": "Bulk order creation using product list",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "",
+            "name": ""
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Popesites\\Quickorder\\": ""
+        }
+    }
+}
