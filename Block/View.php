@@ -1,12 +1,11 @@
+
 <?php
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Popesites\Quickorder\Block;
-
 use Magento\Customer\Model\Context;
-
 /**
  * Sales order view block
  *
@@ -19,25 +18,21 @@ class View extends \Magento\Framework\View\Element\Template
      * @var string
      */
     protected $_template = 'quickorder/view.phtml';
-
     /**
      * Core registry
      *
      * @var \Magento\Framework\Registry
      */
     protected $_coreRegistry = null;
-
     /**
      * @var \Magento\Framework\App\Http\Context
      * @since 100.2.0
      */
     protected $httpContext;
-
     /**
      * @var \Magento\Payment\Helper\Data
      */
     protected $_paymentHelper;
-
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Framework\Registry $registry
@@ -56,7 +51,6 @@ class View extends \Magento\Framework\View\Element\Template
         parent::__construct($context, $data);
         $this->_isScopePrivate = true;
     }
-
     /**
      * @return void
      */
@@ -64,8 +58,6 @@ class View extends \Magento\Framework\View\Element\Template
     {
         $this->pageConfig->getTitle()->set(__('Quick Order'));
     }
-
-
     /**
      * Retrieve current order model instance
      *
@@ -75,7 +67,6 @@ class View extends \Magento\Framework\View\Element\Template
     {
         return $this->_coreRegistry->registry('current_order');
     }
-
     /**
      * Return back url for logged in and guest users
      *
@@ -88,17 +79,15 @@ class View extends \Magento\Framework\View\Element\Template
         }
         return $this->getUrl('*/*/form');
     }
-
     /**
      * @param object $order
      * @return string
      */
     public function getPlaceQuickorderUrl($order)
     {
-        
+
         return $this->getUrl('', ['order_id' => $order->getId()]);
     }
-
     /**
      * @param string $
      * @return object
@@ -107,5 +96,4 @@ class View extends \Magento\Framework\View\Element\Template
     {
         return $this->getUrl('catalog/product/', ['productSku' => $productSku]);
     }
-
 }

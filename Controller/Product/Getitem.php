@@ -1,14 +1,9 @@
 <?php
-
-
 namespace Popesites\Quickorder\Controller\Product;
-
 class Getitem extends \Magento\Framework\App\Action\Action
 {
-
     protected $resultPageFactory;
     protected $jsonHelper;
-
     /**
      * Constructor
      *
@@ -24,7 +19,6 @@ class Getitem extends \Magento\Framework\App\Action\Action
         $this->jsonHelper = $jsonHelper;
         parent::__construct($context);
     }
-
     /**
      * Execute view action
      *
@@ -41,7 +35,6 @@ class Getitem extends \Magento\Framework\App\Action\Action
             return $this->jsonResponse($e->getMessage());
         }
     }
-
     /**
      * Create json response
      *

@@ -3,8 +3,11 @@
 	<default>
 		<configuration>
 			<options>
-				<is_enabled/>
-				<decimal_factor/>
+				<is_enabled>1</is_enabled>
+				<use_sku>1</use_sku>
+				<erp_item_number_attribute_code></erp_item_number_attribute_code>
+				<shipment_method_code></shipment_method_code>
+				<payment_method_code></payment_method_code>
 			</options>
 		</configuration>
 	</default>

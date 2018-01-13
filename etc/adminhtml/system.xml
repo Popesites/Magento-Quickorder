@@ -10,10 +10,29 @@
 			<resource>Popesites_Quickorder::config_popesites_quickorder</resource>
 			<group id="options" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
 				<label>Options</label>
-				<field id="is_enabled" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+				<field id="is_enabled" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label" type="select">
 					<label>Is enabled</label>
+					<comment>Enable/Disable module</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="use_sku" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="2" translate="label" type="select">
+					<label>Use SKU</label>
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="erp_item_number_attribute_code" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="3" translate="label" type="text">
+					<label>ERP Item number attribute code</label>
+					<comment/>
+				</field>
+				<field id="shipment_method_code" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="4" translate="label" type="select">
+					<label>Shipment method</label>
+					<comment>Shipment method code selection</comment>
+					<source_model>Magento\Shipping\Model\Config\Source\Allmethods</source_model>
+				</field>
+				<field id="payment_method_code" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5" translate="label" type="select">
+					<label>Payment method</label>
+					<comment>Payment method code selection</comment>
+					<source_model>Magento\Payment\Model\Config\Source\Allmethods</source_model>
 				</field>
 			</group>
 		</section>
