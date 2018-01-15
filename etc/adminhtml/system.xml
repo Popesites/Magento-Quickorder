@@ -34,6 +34,10 @@
 					<comment>Payment method code selection</comment>
 					<source_model>Magento\Payment\Model\Config\Source\Allmethods</source_model>
 				</field>
+				<field id="cart_or_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="3" translate="label" type="text">
+					<label>Add to Cart, or create a full order</label>
+					<comment>Set "cart" for add products to Cart, or "order" to create an order</comment>
+				</field>
 			</group>
 		</section>
 	</system>

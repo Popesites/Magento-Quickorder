@@ -7,6 +7,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
     const XML_PATH_ERP_ITEM_ATTRIBUTE_CODE = 'popesites_configuration/options/erp_item_number_attribute_code';
     const XML_PATH_SHIPMENT_METHOD_CODE = 'popesites_configuration/options/shipment_method_code';
     const XML_PATH_PAYMENT_METHOD_CODE = 'popesites_configuration/options/payment_method_code';
+    const XML_PATH_ORDER_METOD = 'popesites_configuration/options/cart_or_order';
     protected $storeManager;
     protected $collectionFactory;
     public function __construct(
@@ -65,6 +66,17 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
     public function getErpItemAttributeCode() {
         return trim($this->getValue(self::XML_PATH_ERP_ITEM_ATTRIBUTE_CODE));
     }
+
+
+    /**
+     * Get  Core_Config_Data value
+     *
+     * @param void
+     * @return string
+     */
+    public function getOrderMethod() {
+        return trim($this->getValue(self::XML_PATH_ORDER_METOD));
+    }
     /**
      * Get Configuration parameter value
      *
@@ -116,7 +128,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
             $this->_messageManager->addWarning(__($messageText));
         }
     }
-
     /**
      * Validate product by SKU or erp_item_number_attribute_code
      * Depends on configuration
@@ -125,22 +136,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
      * @return mixed $entity_id or false
      */
     public function validateProduct($sku) {
-
-        var_dump($sku);
-
         $productCollection = $this->collectionFactory->create();
-
-        if ($this->getUseSku()){
+        if ($this->getUseSku()) {
             $productCollection->addAttributeToFilter('sku', $sku);
-        } elseif ($this->getErpItemAttributeCode() != '' ) {
+        } elseif ($this->getErpItemAttributeCode() != '') {
             $productCollection->addAttributeToFilter($this->getErpItemAttributeCode(), $sku);
         }
-
         $productCollection->load();
-
-        $result = false;
         $product = $productCollection->getFirstItem();
-
         return $product->getId();
     }
 }

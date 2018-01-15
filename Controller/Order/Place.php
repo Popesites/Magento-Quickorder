@@ -35,9 +35,26 @@ class Place extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-
         $orderData = $this->createOrderData();
-        $this->quickOrder->createOrder($orderData);
+        if ($this->helper->getOrderMethod() == 'order') {
+            //Create order
+            $resultmsg = $this->quickOrder->createOrder($orderData);
+            if (isset($resultmsg['error']) && $resultmsg['error'] == 1 ) {
+                $this->helper->throwErrorMessage(__($resultmsg['msg']));
+            } else {
+                $this->helper->throwSuccessMessage(__('Order # '.$resultmsg['msg'] . 'was successfully created.'));
+            }
+
+        } else if ($this->helper->getOrderMethod() == 'cart') {
+            // Add products to cart
+            $resultmsg = $this->quickOrder->addToCart($orderData);
+            $this->helper->throwSuccessMessage(__($resultmsg['msg']));
+        } else {
+            //error
+            $this->helper->throwWaringMessage(__('Configuration is wrong. Please check a configuration.'));
+        }
+
+        $this->_redirect('quickorder/index/view');
     }
 
     /**
@@ -58,10 +75,20 @@ class Place extends \Magento\Framework\App\Action\Action
                 $this->helper->throwErrorMessage('Customer has no addresses. They are required to create order. Please update addresses.');
                 return ;
             }
+
+            // set addresses
             if ($shippingAddress) {
                 $orderData['shipping_address'] = $shippingAddress->toArray();
-            } else {
-                $orderData['shipping_address'] = $billingAddress->toArray();
+                if (!$billingAddress){
+                    $orderData['billing_address'] = $shippingAddress->toArray();
+                }
+            }
+
+            if ($billingAddress) {
+                $orderData['billing_address'] = $billingAddress->toArray();
+                if (!$shippingAddress){
+                    $orderData['shipping_address'] = $billingAddress->toArray();
+                }
             }
 
             //set email to order data
@@ -114,15 +141,15 @@ class Place extends \Magento\Framework\App\Action\Action
         $failed_items = array();
         if (count($requestItems) > 0) {
             foreach ($requestItems as $item) {
+                if ($item['sku'] == '') continue;
                 $product_id = $this->helper->validateProduct($item['sku']);
                 if ($product_id && $item['qty']) {
                     $items[]= array('product_id' => $product_id, 'qty' => $item['qty']);
                 } else {
-                    if (!$product_id) { $failed_items[] = $item['sku']; }
+                    if (!$product_id ) { $failed_items[] = $item['sku']; }
                 }
             }
         }
-
         // Add error message if some products are not found
         if (count($failed_items) > 0) {
             if ($this->helper->getUseSku()) {
