@@ -1,6 +1,7 @@
 <?php
 namespace Popesites\Quickorder\Block;
 use Magento\Customer\Model\Context;
+
 /**
  * Sales order view block
  *
