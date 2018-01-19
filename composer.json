@@ -1,11 +1,11 @@
 {
     "name": "popesites/module-quickorder",
     "description": "Bulk order creation using product list",
-    "license": "proprietary",
+    "license": "OSL-3.0",
     "authors": [
         {
-            "email": "",
-            "name": ""
+            "email": "info@popesites.tech",
+            "name": "Popesites"
         }
     ],
     "minimum-stability": "dev",

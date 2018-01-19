@@ -38,7 +38,13 @@ class Place extends \Magento\Framework\App\Action\Action
         $orderData = $this->createOrderData();
         if ($this->helper->getOrderMethod() == 'order') {
             //Create order
-            $resultmsg = $this->quickOrder->createOrder($orderData);
+
+            if (!$orderData || count($orderData) == 0) {
+                $this->helper->throwErrorMessage(__("Something went wrong. Can't not create order"));
+            } else {
+                $resultmsg = $this->quickOrder->createOrder($orderData);
+            }
+
             if (isset($resultmsg['error']) && $resultmsg['error'] == 1 ) {
                 $this->helper->throwErrorMessage(__($resultmsg['msg']));
             } else {
@@ -47,8 +53,12 @@ class Place extends \Magento\Framework\App\Action\Action
 
         } else if ($this->helper->getOrderMethod() == 'cart') {
             // Add products to cart
-            $resultmsg = $this->quickOrder->addToCart($orderData);
-            $this->helper->throwSuccessMessage(__($resultmsg['msg']));
+            if (!$orderData || count($orderData) == 0) {
+                $this->helper->throwErrorMessage(__("Something went wrong. Can't add products to cart"));
+            } else {
+                $resultmsg = $this->quickOrder->addToCart($orderData);
+                $this->helper->throwSuccessMessage(__($resultmsg['msg']));
+            }
         } else {
             //error
             $this->helper->throwWaringMessage(__('Configuration is wrong. Please check a configuration.'));
@@ -67,13 +77,18 @@ class Place extends \Magento\Framework\App\Action\Action
         $orderData = array();
         $customer = $this->customerSession->getCustomer();
 
+        if (!$customer) {
+            $this->helper->throwErrorMessage('Customer is not logged in. Please log in.');
+            return array();
+        }
+
         if ($customer) {
             // set Shipping Address to order data
             $shippingAddress = $customer->getDefaultShippingAddress();
             $billingAddress = $customer->getDefaultBillingAddress();
             if (!$shippingAddress && !$billingAddress) {
                 $this->helper->throwErrorMessage('Customer has no addresses. They are required to create order. Please update addresses.');
-                return ;
+                return array();
             }
 
             // set addresses
@@ -100,7 +115,7 @@ class Place extends \Magento\Framework\App\Action\Action
             //set shipment method
             if (!$this->helper->getShipmentMethodCode()) {
                 $this->helper->throwErrorMessage('Shipment method is required to create order. Please set shipment method in module configuration.');
-                return ;
+                return array();
             } else {
                 $orderData['shipping_method_code'] = $this->helper->getShipmentMethodCode();
             }
@@ -108,7 +123,7 @@ class Place extends \Magento\Framework\App\Action\Action
             //set payment method
             if (!$this->helper->getPaymentMethodCode()) {
                 $this->helper->throwErrorMessage('Payment method is required to create order. Please set payment method in module configuration.');
-                return ;
+                return array();
             } else {
                 $orderData['payment_method_code'] = $this->helper->getPaymentMethodCode();
             }
@@ -117,7 +132,7 @@ class Place extends \Magento\Framework\App\Action\Action
 
             if (!$items || count($items) == 0 ) {
                 $this->helper->throwErrorMessage('Sorry, no products found. Please try again.');
-                return;
+                return array();
             }
 
             $orderData['items'] = $items;

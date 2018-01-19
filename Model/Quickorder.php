@@ -132,13 +132,14 @@ class Quickorder {
         $customer->loadByEmail($orderData['email']); // load customet by email address
         // loading customer data
         $customer = $this->customerRepository->getById($customer->getEntityId());
-        $quote = $this->quoteManagement->getCartForCustomer($customer->getId());
+        //$quote = $this->quoteManagement->getCartForCustomer($customer->getId());
         //add items in cart
         foreach ($orderData['items'] as $item) {
             $_product = $this->product->load($item['product_id']);
-            $quote->addProduct($_product, intval($item['qty']));
+            $this->cart->addProduct($_product, intval($item['qty']));
         }
-        $quote->save();
+        $this->cart->save();
+        $this->checkoutSession->setCartWasUpdated(true);
 
         $resultmsg = ['msg' => 'All products were successfully added.'];
         return $resultmsg;
