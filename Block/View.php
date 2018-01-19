@@ -1,18 +1,12 @@
 <?php
 namespace Popesites\Quickorder\Block;
 use Magento\Customer\Model\Context;
-
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
 /**
  * Sales order view block
  *
  * @api
  * @since 100.0.2
- */
+ **/
 class View extends \Magento\Framework\View\Element\Template
 {
     /**
