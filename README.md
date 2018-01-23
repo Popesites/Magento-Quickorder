@@ -1,6 +1,6 @@
 # Extension User Guide
 
-Find installation and configuration instructions here: www.popesites.com/magento-quickorder.
+Select branch 'v-1.0' and follow directions in that branch's README.
 
 # About Popesites' Quickorders
 
