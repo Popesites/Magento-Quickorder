@@ -1,10 +1,36 @@
 <?php
+
 namespace Popesites\Quickorder\Controller\Order;
+
+/**
+ * Class Place
+ *
+ * Order place action.
+ *
+ * @category Api
+ * @package  Popesites\Quickorder\Controller\Order
+ * @author Popesites <info@popesites.tech>
+ */
 class Place extends \Magento\Framework\App\Action\Action
 {
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     */
     protected $resultPageFactory;
+
+    /**
+     * @var \Popesites\Quickorder\Model\Quickorder $quickOrder
+     */
     protected $quickOrder;
+
+    /**
+     * @var \Magento\Customer\Model\Session $customerSession
+     */
     protected $customerSession;
+
+    /**
+     * @var \Popesites\Quickorder\Helper\Data $helper
+     */
     protected $helper;
 
 
@@ -13,6 +39,10 @@ class Place extends \Magento\Framework\App\Action\Action
      *
      * @param \Magento\Framework\App\Action\Context  $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param \Magento\Customer\Model\Session $customerSession
+     * @param \Popesites\Quickorder\Model\Quickorder $quickOrder
+     * @param \Popesites\Quickorder\Helper\Data $helper
+     *
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -28,30 +58,31 @@ class Place extends \Magento\Framework\App\Action\Action
 
         parent::__construct($context);
     }
+
     /**
      * Execute place action
      *
      * @return \Magento\Framework\Controller\ResultInterface
      */
-    public function execute()
-    {
+    public function execute() {
         $orderData = $this->createOrderData();
-        if ($this->helper->getOrderMethod() == 'order') {
-            //Create order
 
+        if ($this->helper->getOrderMethod() == 'order') {
+
+            // Create order
             if (!$orderData || count($orderData) == 0) {
                 $this->helper->throwErrorMessage(__("Something went wrong. Can't not create order"));
             } else {
                 $resultmsg = $this->quickOrder->createOrder($orderData);
             }
 
-            if (isset($resultmsg['error']) && $resultmsg['error'] == 1 ) {
+            if (isset($resultmsg['error']) && $resultmsg['error'] == 1) {
                 $this->helper->throwErrorMessage(__($resultmsg['msg']));
             } else {
-                $this->helper->throwSuccessMessage(__('Order # '.$resultmsg['msg'] . 'was successfully created.'));
+                $this->helper->throwSuccessMessage(__('Order # ' . $resultmsg['msg'] . 'was successfully created.'));
             }
-
         } else if ($this->helper->getOrderMethod() == 'cart') {
+
             // Add products to cart
             if (!$orderData || count($orderData) == 0) {
                 $this->helper->throwErrorMessage(__("Something went wrong. Can't add products to cart"));
@@ -60,7 +91,8 @@ class Place extends \Magento\Framework\App\Action\Action
                 $this->helper->throwSuccessMessage(__($resultmsg['msg']));
             }
         } else {
-            //error
+
+            // error message
             $this->helper->throwWaringMessage(__('Configuration is wrong. Please check a configuration.'));
         }
 
@@ -83,6 +115,7 @@ class Place extends \Magento\Framework\App\Action\Action
         }
 
         if ($customer) {
+
             // set Shipping Address to order data
             $shippingAddress = $customer->getDefaultShippingAddress();
             $billingAddress = $customer->getDefaultBillingAddress();
@@ -94,14 +127,14 @@ class Place extends \Magento\Framework\App\Action\Action
             // set addresses
             if ($shippingAddress) {
                 $orderData['shipping_address'] = $shippingAddress->toArray();
-                if (!$billingAddress){
+                if (!$billingAddress) {
                     $orderData['billing_address'] = $shippingAddress->toArray();
                 }
             }
 
             if ($billingAddress) {
                 $orderData['billing_address'] = $billingAddress->toArray();
-                if (!$shippingAddress){
+                if (!$shippingAddress) {
                     $orderData['shipping_address'] = $billingAddress->toArray();
                 }
             }
@@ -128,14 +161,16 @@ class Place extends \Magento\Framework\App\Action\Action
                 $orderData['payment_method_code'] = $this->helper->getPaymentMethodCode();
             }
 
+            //get product id's array to create quote items
             $items = $this->getItems();
 
-            if (!$items || count($items) == 0 ) {
+            if (!$items || count($items) == 0) {
                 $this->helper->throwErrorMessage('Sorry, no products found. Please try again.');
                 return array();
             }
 
             $orderData['items'] = $items;
+            $orderData['form_key'] = $this->getRequest()->getParam('form_key');
 
             return $orderData;
         }
@@ -156,25 +191,30 @@ class Place extends \Magento\Framework\App\Action\Action
         $failed_items = array();
         if (count($requestItems) > 0) {
             foreach ($requestItems as $item) {
-                if ($item['sku'] == '') continue;
+                if ($item['sku'] == '')
+                    continue;
                 $product_id = $this->helper->validateProduct($item['sku']);
                 if ($product_id && $item['qty']) {
-                    $items[]= array('product_id' => $product_id, 'qty' => $item['qty']);
+                    $items[] = array('product_id' => $product_id, 'qty' => (int) $item['qty']);
                 } else {
-                    if (!$product_id ) { $failed_items[] = $item['sku']; }
+                    if (!$product_id) {
+                        $failed_items[] = $item['sku'];
+                    }
                 }
             }
         }
+
         // Add error message if some products are not found
         if (count($failed_items) > 0) {
             if ($this->helper->getUseSku()) {
-                $errorMsg = 'There no products with SKU\'s: '. implode(',', $failed_items);
+                $errorMsg = 'There no products with SKU\'s: ' . implode(',', $failed_items);
             } else {
-                $errorMsg = 'There no products with ERP Item Number: '. implode(',', $failed_items);
+                $errorMsg = 'There no products with ERP Item Number: ' . implode(',', $failed_items);
             }
             $this->helper->throwErrorMessage($errorMsg);
         }
 
         return $items;
     }
+
 }

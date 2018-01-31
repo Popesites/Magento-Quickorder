@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Quickorder/view template.
+Contains quickorder form.
 -->
 <html>
 <head>
@@ -40,6 +39,8 @@ and open the template in the editor.
     <div class="actions-toolbar">
         <input class="action submit primary" type="submit" value="<?php echo __('Place Order'); ?>" />
     </div>
+
+    <input name="form_key" type="hidden" value="<?php echo $block->getFormKey();?>">
 
 </form>
 
