@@ -10,6 +10,8 @@ To get started with this extension:
 4. Run `php bin/magento module:enable Popesites_Quickorder` from command line.
 5. Navigate to Stores > Configuration > Popesites in the Magento back-end.
 6. Enable the extension, and set any of the additional configurations you'd like.
+=======
+Select branch 'v-1.0' and follow directions in that branch's README.
 
 # About Popesites' Quickorders
 
