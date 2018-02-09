@@ -7,8 +7,8 @@ namespace Popesites\Quickorder\Controller\Order;
  *
  * Order place action.
  *
- * @category Api
- * @package  Popesites\Quickorder\Controller\Order
+ * @category Popesites
+ * @package  Popesites_Quickorder
  * @author Popesites <info@popesites.tech>
  */
 class Place extends \Magento\Framework\App\Action\Action

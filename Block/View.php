@@ -9,8 +9,8 @@ use Magento\Customer\Model\Context;
  *
  * Is used to show Quick order template in customer cabinet
  *
- * @category Api
- * @package  Popesites\Quickorder\Block
+ * @category Popesites
+ * @package  Popesites_Quickorder
  * @author Popesites <info@popesites.tech>
  **/
 class View extends \Magento\Framework\View\Element\Template
@@ -105,5 +105,5 @@ class View extends \Magento\Framework\View\Element\Template
     }
 
 }
-=======
+
 }

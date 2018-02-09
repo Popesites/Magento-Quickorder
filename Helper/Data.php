@@ -9,8 +9,8 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
  *
  * Popesites Helper
  *
- * @category Api
- * @package  Popesites\Quickorder\Helper
+ * @category Popesites
+ * @package  Popesites_Quickorder
  * @author Popesites <info@popesites.tech>
  */
 class Data extends \Magento\Framework\App\Helper\AbstractHelper {

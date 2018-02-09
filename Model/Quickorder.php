@@ -7,8 +7,8 @@ namespace Popesites\Quickorder\Model;
  *
  * Creates order or adds items to cart
  *
- * @category Api
- * @package  Popesites\Quickorder\Model
+ * @category Popesites
+ * @package  Popesites_Quickorder
  * @author Popesites <info@popesites.tech>
  */
 class Quickorder {
