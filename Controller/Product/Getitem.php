@@ -7,8 +7,8 @@ namespace Popesites\Quickorder\Controller\Product;
  *
  * Get product by attribute action.
  *
- * @category Api
- * @package  Popesites\Quickorder\Controller\Product
+ * @category Popesites
+ * @package  Popesites_Quickorder
  * @author Popesites <info@popesites.tech>
  */
 class Getitem extends \Magento\Framework\App\Action\Action

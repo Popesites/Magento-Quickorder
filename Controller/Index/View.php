@@ -7,8 +7,8 @@ namespace Popesites\Quickorder\Controller\Index;
  *
  * Quickorder/view page
  *
- * @category Api
- * @package  Popesites\Quickorder\Controller\Index
+ * @category Popesites
+ * @package  Popesites_Quickorder
  * @author Popesites <info@popesites.tech>
  */
 class View extends \Magento\Framework\App\Action\Action
