@@ -34,21 +34,33 @@ class View extends \Magento\Framework\View\Element\Template
     protected $httpContext;
 
     /**
+     * @var \Magento\Catalog\Model\ResourceModel\Product
+     */
+    protected $product;
+
+    /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\App\Http\Context $httpContext
      * @param array $data
      */
+    /** @var \Popesites\Quickorder\Helper\Data */
+    protected $helper;
+
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\App\Http\Context $httpContext,
+        \Magento\Catalog\Model\ResourceModel\Product $product,
+        \Popesites\Quickorder\Helper\Data $helper,
         array $data = []
     ) {
         $this->_coreRegistry = $registry;
         $this->httpContext = $httpContext;
         parent::__construct($context, $data);
         $this->_isScopePrivate = true;
+        $this->product = $product;
+        $this->helper = $helper;
     }
 
     /**
@@ -103,5 +115,27 @@ class View extends \Magento\Framework\View\Element\Template
     public function getProductUrl($productSku) {
         return $this->getUrl('catalog/product/', ['productSku' => $productSku]);
     }
+    
+    public function getPlaceholder(){
+        $attributeCode = $this->helper->getErpItemAttributeCode();
+        $placeholders = [
+            $this->product->getAttribute('sku')->getStoreLabel(),
+        ];
 
+        if(!empty($attributeCode)){
+            $placeholders[] = $attributeCode;
+        }
+
+        return implode(' / ', $placeholders);
+    }
+
+    public function getOrderMethodText(){
+        $orderMethod = $this->helper->getOrderMethod();
+
+        if($orderMethod === 'cart'){
+            return __('Add to Cart');
+        } else {
+            return __('Place Order');
+        }
+    }
 }
