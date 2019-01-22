@@ -38,15 +38,15 @@ class View extends \Magento\Framework\View\Element\Template
      */
     protected $product;
 
+    /** @var \Popesites\Quickorder\Helper\Data */
+    protected $helper;
+    
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\App\Http\Context $httpContext
      * @param array $data
      */
-    /** @var \Popesites\Quickorder\Helper\Data */
-    protected $helper;
-
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Registry $registry,
