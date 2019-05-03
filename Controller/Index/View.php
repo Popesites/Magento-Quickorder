@@ -47,15 +47,6 @@ class View extends \Magento\Framework\App\Action\Action
      * @return \Magento\Framework\Controller\ResultInterface
      */
     public function execute() {
-        if (!$this->session->isLoggedIn()) {
-
-            // if customer is not logged in redirect to login page
-            // @var \Magento\Framework\Controller\Result\Redirect $resultRedirect
-            $resultRedirect = $this->resultRedirectFactory->create();
-            $resultRedirect->setPath('customer/account/login');
-            return $resultRedirect;
-        }
-
         // @var \Magento\Framework\View\Result\Page $resultPage
         $resultPage = $this->resultPageFactory->create();
         return $resultPage;
