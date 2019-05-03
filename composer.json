@@ -9,7 +9,11 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "magento/module-store": "*",
+        'magento/module-sales': "*",
+        "magento/framework": "*"
+    },
     "autoload": {
         "files": [
             "registration.php"
