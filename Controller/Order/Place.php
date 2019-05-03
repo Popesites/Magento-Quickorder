@@ -117,27 +117,33 @@ class Place extends \Magento\Framework\App\Action\Action
         if ($customer) {
 
             // set Shipping Address to order data
-            $shippingAddress = $customer->getDefaultShippingAddress();
-            $billingAddress = $customer->getDefaultBillingAddress();
-            if (!$shippingAddress && !$billingAddress) {
-                $this->helper->throwErrorMessage('Customer has no addresses. They are required to create order. Please update addresses.');
-                return array();
-            }
 
-            // set addresses
-            if ($shippingAddress) {
-                $orderData['shipping_address'] = $shippingAddress->toArray();
-                if (!$billingAddress) {
-                    $orderData['billing_address'] = $shippingAddress->toArray();
+            if ($this->helper->getOrderMethod() != 'cart') {
+
+                $shippingAddress = $customer->getDefaultShippingAddress();
+                $billingAddress = $customer->getDefaultBillingAddress();
+                if (!$shippingAddress && !$billingAddress) {
+                    $this->helper->throwErrorMessage('Customer has no addresses. They are required to create order. Please update addresses.');
+                    return array();
+                }
+
+                // set addresses
+                if ($shippingAddress) {
+                    $orderData['shipping_address'] = $shippingAddress->toArray();
+                    if (!$billingAddress) {
+                        $orderData['billing_address'] = $shippingAddress->toArray();
+                    }
+                }
+
+                if ($billingAddress) {
+                    $orderData['billing_address'] = $billingAddress->toArray();
+                    if (!$shippingAddress) {
+                        $orderData['shipping_address'] = $billingAddress->toArray();
+                    }
+
                 }
             }
 
-            if ($billingAddress) {
-                $orderData['billing_address'] = $billingAddress->toArray();
-                if (!$shippingAddress) {
-                    $orderData['shipping_address'] = $billingAddress->toArray();
-                }
-            }
 
             //set email to order data
             $orderData['email'] = $customer->getEmail();
