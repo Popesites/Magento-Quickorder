@@ -47,13 +47,17 @@ class View extends \Magento\Framework\View\Element\Template
      * @param \Magento\Framework\App\Http\Context $httpContext
      * @param array $data
      */
+    /** @var \Magento\Framework\Data\Form\FormKey */
+    protected $formKey;
+
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\App\Http\Context $httpContext,
         \Magento\Catalog\Model\ResourceModel\Product $product,
         \Popesites\Quickorder\Helper\Data $helper,
-        array $data = []
+        array $data = [],
+        \Magento\Framework\Data\Form\FormKey $formKey
     ) {
         $this->_coreRegistry = $registry;
         $this->httpContext = $httpContext;
@@ -61,6 +65,7 @@ class View extends \Magento\Framework\View\Element\Template
         $this->_isScopePrivate = true;
         $this->product = $product;
         $this->helper = $helper;
+        $this->formKey = $formKey;
     }
 
     /**
@@ -137,5 +142,10 @@ class View extends \Magento\Framework\View\Element\Template
         } else {
             return __('Place Order');
         }
+    }
+    
+    public function getFormKey()
+    {
+        return $this->formKey->getFormKey();
     }
 }
