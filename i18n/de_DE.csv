@@ -1,2 +1,5 @@
-Quick Order,Express-Bestelleingabe
-Quick Order Entry,Express-Bestelleingabe
+"Quick Order","Express-Bestelleingabe"
+"Quick Order Entry","Express-Bestelleingabe"
+"All products were successfully added.","Alle Produkte wurden erfolgreich hinzugefügt."
+"Error! Could not update cart! Please try again.","Fehler! Der Warenkorb konnte nicht aktualisiert werden! Bitte versuchen Sie es noch einmal."
+"Could not to dispatch an order.","Bestellung konnte nicht erstellt werden."
