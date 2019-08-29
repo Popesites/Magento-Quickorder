@@ -3,3 +3,5 @@
 "All products were successfully added.","Alle Produkte wurden erfolgreich hinzugefügt."
 "Error! Could not update cart! Please try again.","Fehler! Der Warenkorb konnte nicht aktualisiert werden! Bitte versuchen Sie es noch einmal."
 "Could not to dispatch an order.","Bestellung konnte nicht erstellt werden."
+"Order # %1 was successfully created.", "Die Bestellung mit der Bestellnummer # %1 wurde erfolgreich erstellt."
+"There no products with ERP Item Number: %1", "Es gibt keine Produkte mit der ERP Nummer # %1."

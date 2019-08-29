@@ -79,7 +79,7 @@ class Place extends \Magento\Framework\App\Action\Action
             if (isset($resultmsg['error']) && $resultmsg['error'] == 1) {
                 $this->helper->throwErrorMessage(__($resultmsg['msg']));
             } else {
-                $this->helper->throwSuccessMessage(__('Order # ' . $resultmsg['msg'] . 'was successfully created.'));
+                $this->helper->throwSuccessMessage(__('Order # %1 was successfully created.', $resultmsg['msg']));
             }
         } else if ($this->helper->getOrderMethod() == 'cart') {
 
@@ -213,9 +213,9 @@ class Place extends \Magento\Framework\App\Action\Action
         // Add error message if some products are not found
         if (count($failed_items) > 0) {
             if ($this->helper->getUseSku()) {
-                $errorMsg = 'There no products with SKU\'s: ' . implode(',', $failed_items);
+                $errorMsg = __('There no products with SKU\'s: %1', implode(',', $failed_items));
             } else {
-                $errorMsg = 'There no products with ERP Item Number: ' . implode(',', $failed_items);
+                $errorMsg = __('There no products with ERP Item Number: %1', implode(',', $failed_items));
             }
             $this->helper->throwErrorMessage($errorMsg);
         }
