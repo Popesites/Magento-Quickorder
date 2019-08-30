@@ -67,33 +67,23 @@ class Place extends \Magento\Framework\App\Action\Action
     public function execute() {
         $orderData = $this->createOrderData();
 
-        if ($this->helper->getOrderMethod() == 'order') {
-
-            // Create order
-            if (!$orderData || count($orderData) == 0) {
-                $this->helper->throwErrorMessage(__("Something went wrong. Can't not create order"));
-            } else {
+        // Create order
+        if ( ! $orderData || count($orderData) == 0) {
+            $this->helper->throwErrorMessage('Sorry, no products found. Please try again.');
+        } else {
+            if ($this->helper->getOrderMethod() == 'order') {
                 $resultmsg = $this->quickOrder->createOrder($orderData);
-            }
-
-            if (isset($resultmsg['error']) && $resultmsg['error'] == 1) {
-                $this->helper->throwErrorMessage(__($resultmsg['msg']));
-            } else {
-                $this->helper->throwSuccessMessage(__('Order # %1 was successfully created.', $resultmsg['msg']));
-            }
-        } else if ($this->helper->getOrderMethod() == 'cart') {
-
-            // Add products to cart
-            if (!$orderData || count($orderData) == 0) {
-                $this->helper->throwErrorMessage(__("Something went wrong. Can't add products to cart"));
-            } else {
+                if (isset($resultmsg['error']) && $resultmsg['error'] == 1) {
+                    $this->helper->throwErrorMessage(__($resultmsg['msg']));
+                } else {
+                    $this->helper->throwSuccessMessage(__('Order # %1 was successfully created.', $resultmsg['msg']));
+                }
+            } elseif ($this->helper->getOrderMethod() == 'cart') {
                 $resultmsg = $this->quickOrder->addToCart($orderData);
                 $this->helper->throwSuccessMessage(__($resultmsg['msg']));
+            } else {
+                $this->helper->throwWarningMessage(__('Configuration is wrong. Please check a configuration.'));
             }
-        } else {
-
-            // error message
-            $this->helper->throwWaringMessage(__('Configuration is wrong. Please check a configuration.'));
         }
 
         $this->_redirect('quickorder/index/view');
@@ -171,7 +161,6 @@ class Place extends \Magento\Framework\App\Action\Action
             $items = $this->getItems();
 
             if (!$items || count($items) == 0) {
-                $this->helper->throwErrorMessage('Sorry, no products found. Please try again.');
                 return array();
             }
 
