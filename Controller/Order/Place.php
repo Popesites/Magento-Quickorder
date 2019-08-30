@@ -213,7 +213,7 @@ class Place extends \Magento\Framework\App\Action\Action
         // Add error message if some products are not found
         if (count($failed_items) > 0) {
             if ($this->helper->getUseSku()) {
-                $errorMsg = __('There no products with SKU\'s: %1', implode(',', $failed_items));
+                $errorMsg = __('There no products with SKU(s): %1', implode(',', $failed_items));
             } else {
                 $errorMsg = __('There no products with ERP Item Number: %1', implode(',', $failed_items));
             }
