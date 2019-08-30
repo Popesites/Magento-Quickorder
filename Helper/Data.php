@@ -177,7 +177,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
      * @param string
      * @return void
      */
-    public function throwWaringMessage($messageText) {
+    public function throwWarningMessage($messageText) {
         if ($messageText && $messageText != '') {
             $this->messageManager->addWarning(__($messageText));
         }
