@@ -189,7 +189,11 @@ class Place extends \Magento\Framework\App\Action\Action
                 if ($item['sku'] == '')
                     continue;
                 $product_id = $this->helper->validateProduct($item['sku']);
-                if ($product_id && $item['qty']) {
+                // default quantity = 1 (we might as well take the min order qty)
+                if (empty($item['qty'])) {
+                    $item['qty'] = 1;
+                }
+                if ($product_id) {
                     $items[] = array('product_id' => $product_id, 'qty' => (int) $item['qty']);
                 } else {
                     if (!$product_id) {
