@@ -41,31 +41,34 @@ class View extends \Magento\Framework\View\Element\Template
     /** @var \Popesites\Quickorder\Helper\Data */
     protected $helper;
     
+    /** @var \Magento\Framework\Data\Form\FormKey */
+    protected $formKey;
+
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\App\Http\Context $httpContext
+     * @param \Magento\Catalog\Model\ResourceModel\Product $product
+     * @param \Popesites\Quickorder\Helper\Data $helper
+     * @param \Magento\Framework\Data\Form\FormKey $formKey
      * @param array $data
      */
-    /** @var \Magento\Framework\Data\Form\FormKey */
-    protected $formKey;
-
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\App\Http\Context $httpContext,
         \Magento\Catalog\Model\ResourceModel\Product $product,
         \Popesites\Quickorder\Helper\Data $helper,
-        array $data = [],
-        \Magento\Framework\Data\Form\FormKey $formKey
+        \Magento\Framework\Data\Form\FormKey $formKey,
+        array $data = []
     ) {
         $this->_coreRegistry = $registry;
         $this->httpContext = $httpContext;
-        parent::__construct($context, $data);
         $this->_isScopePrivate = true;
         $this->product = $product;
         $this->helper = $helper;
         $this->formKey = $formKey;
+        parent::__construct($context, $data);
     }
 
     /**
